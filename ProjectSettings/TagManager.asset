@@ -7,6 +7,7 @@ TagManager:
   - Platform
   - Environment
   - House
+  - Death
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - 
   - Platform
   - Environment
-  - 
+  - Background
   - 
   - 
   - 
@@ -41,6 +42,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 4104095167
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

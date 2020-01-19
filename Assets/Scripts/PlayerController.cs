@@ -53,5 +53,17 @@ public class PlayerController : MonoBehaviour
 		{
 			SceneManager.LoadScene("SampleScene");
 		}
+
+		if (col.CompareTag("Death"))
+		{
+			SceneManager.LoadScene("SampleScene");
+		}
+	}
+	void OnCollisionEnter2D(Collision2D col)
+	{
+		if (col.transform.CompareTag("Death"))
+		{
+			SceneManager.LoadScene("SampleScene");
+		}
 	}
 }
