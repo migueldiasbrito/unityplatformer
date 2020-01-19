@@ -6,22 +6,44 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 	public float Speed = 0.0f;
+	public float JumpForce = 0.0f;
 
-	private Rigidbody2D selfRigidbody2D;
+	public Transform FeetRectangleTopLeft;
+	public Transform FeetRectangleBottomRight;
+	public LayerMask GroundLayer;
+
+	private Rigidbody2D selfRigidbody;
 	private float horizontalMovement = 0.0f;
+	public bool isGrounded = false;
+	private bool canJump = false;
 
     void Start()
     {
-		selfRigidbody2D = GetComponent<Rigidbody2D>();
+		selfRigidbody = GetComponent<Rigidbody2D>();
     }
 
     void Update()
     {
 		horizontalMovement = Input.GetAxis("Horizontal");
+
+		if(Input.GetAxis("Jump") > 0.1f && isGrounded)
+		{
+			canJump = true;
+		}
     }
 
 	void FixedUpdate()
 	{
-		selfRigidbody2D.velocity = new Vector2(Speed * horizontalMovement, selfRigidbody2D.velocity.y);
+		isGrounded = Physics2D.OverlapArea(FeetRectangleTopLeft.position, FeetRectangleBottomRight.position,
+			GroundLayer);
+
+		if (canJump)
+		{
+			canJump = false;
+			isGrounded = false;
+			selfRigidbody.AddForce(new Vector2(0, 1) * JumpForce, ForceMode2D.Impulse);
+		}
+
+		selfRigidbody.velocity = new Vector2(Speed * horizontalMovement, selfRigidbody.velocity.y);
 	}
 }
