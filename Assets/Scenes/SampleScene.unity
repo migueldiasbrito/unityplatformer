@@ -170,7 +170,7 @@ GameObject:
   - component: {fileID: 416505579}
   m_Layer: 0
   m_Name: Frog
-  m_TagString: Death
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -669,7 +669,7 @@ GameObject:
   - component: {fileID: 696540056}
   m_Layer: 0
   m_Name: Opossum (1)
-  m_TagString: Death
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21341,7 +21341,7 @@ GameObject:
   - component: {fileID: 1014669968}
   m_Layer: 0
   m_Name: Opossum
-  m_TagString: Death
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21588,7 +21588,7 @@ GameObject:
   - component: {fileID: 1407329117}
   m_Layer: 0
   m_Name: Eagle
-  m_TagString: Death
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21870,6 +21870,9 @@ MonoBehaviour:
   GroundLayer:
     serializedVersion: 2
     m_Bits: 768
+  StarPrefab: {fileID: 4095745380662563793, guid: 9d8f299b4171a494c8d96971fc6c834d,
+    type: 3}
+  RecoilTime: 3
 --- !u!1 &1704866680
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,6 +8,8 @@ TagManager:
   - Environment
   - House
   - Death
+  - Star
+  - Enemy
   layers:
   - Default
   - TransparentFX

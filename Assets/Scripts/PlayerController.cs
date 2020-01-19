@@ -13,23 +13,43 @@ public class PlayerController : MonoBehaviour
 	public Transform FeetRectangleBottomRight;
 	public LayerMask GroundLayer;
 
+	public GameObject StarPrefab;
+	public float RecoilTime = 0.0f;
+
 	private Rigidbody2D selfRigidbody;
 	private float horizontalMovement = 0.0f;
 	private bool isGrounded = false;
 	private bool canJump = false;
+	private float timeSinceLastFire = 0.0f;
 
     void Start()
     {
 		selfRigidbody = GetComponent<Rigidbody2D>();
+		timeSinceLastFire = RecoilTime;
     }
 
     void Update()
     {
 		horizontalMovement = Input.GetAxis("Horizontal");
 
+		if((horizontalMovement > 0.1f && transform.localScale.x < 0) ||
+			(horizontalMovement < -0.1f && transform.localScale.x > 0))
+		{
+			transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+		}
+
 		if(Input.GetAxis("Jump") > 0.1f && isGrounded)
 		{
 			canJump = true;
+		}
+
+		timeSinceLastFire += Time.deltaTime;
+		if(Input.GetAxis("Fire1") > 0.1f && timeSinceLastFire >= RecoilTime)
+		{
+			GameObject newStar = Instantiate(StarPrefab);
+			newStar.transform.position = transform.position;
+			newStar.GetComponent<StarBehaviour>().Speed *= (transform.localScale.x > 0) ? 1 : -1;
+			timeSinceLastFire = 0.0f;
 		}
     }
 
@@ -61,7 +81,7 @@ public class PlayerController : MonoBehaviour
 	}
 	void OnCollisionEnter2D(Collision2D col)
 	{
-		if (col.transform.CompareTag("Death"))
+		if (col.transform.CompareTag("Enemy"))
 		{
 			SceneManager.LoadScene("SampleScene");
 		}
