@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
@@ -45,5 +46,12 @@ public class PlayerController : MonoBehaviour
 		}
 
 		selfRigidbody.velocity = new Vector2(Speed * horizontalMovement, selfRigidbody.velocity.y);
+	}
+	void OnTriggerEnter2D(Collider2D col)
+	{
+		if (col.CompareTag("House"))
+		{
+			SceneManager.LoadScene("SampleScene");
+		}
 	}
 }
