@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
 
 	private Rigidbody2D selfRigidbody;
 	private float horizontalMovement = 0.0f;
-	public bool isGrounded = false;
+	private bool isGrounded = false;
 	private bool canJump = false;
 
     void Start()
