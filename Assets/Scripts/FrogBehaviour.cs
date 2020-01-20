@@ -45,6 +45,7 @@ public class FrogBehaviour : MonoBehaviour
 			if (jumpCount > MaxJumpsOnSameDirection)
 			{
 				currentDirection *= -1;
+				transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
 				jumpCount = 1;
 			}
 

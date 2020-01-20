@@ -21609,6 +21609,10 @@ MonoBehaviour:
   SpeedX: 2
   Radius: 3
   AccelerationY: 5
+  DistanceTrigger: 8
+  AttackSpeedX: 2
+  AttackSpeedY: -5
+  TakeOffSpeedY: 2
 --- !u!212 &1407329114
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -21796,7 +21800,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1454072607}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.47, y: 0.66, z: 0}
+  m_LocalPosition: {x: -5.6, y: -3.3, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children:
   - {fileID: 1205491174}
