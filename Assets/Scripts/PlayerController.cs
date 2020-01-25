@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
 	public float Speed = 0.0f;
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour
 	public float RecoilTime = 0.0f;
 
 	private Rigidbody2D selfRigidbody;
+	private Animator selfAnimator;
 	private float horizontalMovement = 0.0f;
 	private bool isGrounded = false;
 	private bool canJump = false;
@@ -25,6 +27,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
 		selfRigidbody = GetComponent<Rigidbody2D>();
+		selfAnimator = GetComponent<Animator>();
 		timeSinceLastFire = RecoilTime;
     }
 
@@ -32,15 +35,29 @@ public class PlayerController : MonoBehaviour
     {
 		horizontalMovement = Input.GetAxis("Horizontal");
 
+		selfAnimator.SetBool("Running", Mathf.Abs(horizontalMovement) > 0.1f);
+
 		if((horizontalMovement > 0.1f && transform.localScale.x < 0) ||
 			(horizontalMovement < -0.1f && transform.localScale.x > 0))
 		{
 			transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
 		}
 
-		if(Input.GetAxis("Jump") > 0.1f && isGrounded)
+		if(selfAnimator.GetBool("JumpingUp") && selfRigidbody.velocity.y < 0)
+		{
+			selfAnimator.SetBool("JumpingUp", false);
+			selfAnimator.SetBool("JumpingDown", true);
+		}
+
+		if (selfAnimator.GetBool("JumpingDown") && isGrounded)
+		{
+			selfAnimator.SetBool("JumpingDown", false);
+		}
+
+		if (Input.GetAxis("Jump") > 0.1f && isGrounded)
 		{
 			canJump = true;
+			selfAnimator.SetBool("JumpingUp", true);
 		}
 
 		timeSinceLastFire += Time.deltaTime;
@@ -50,6 +67,11 @@ public class PlayerController : MonoBehaviour
 			newStar.transform.position = transform.position;
 			newStar.GetComponent<StarBehaviour>().Speed *= (transform.localScale.x > 0) ? 1 : -1;
 			timeSinceLastFire = 0.0f;
+			selfAnimator.SetBool("Firing", true);
+		}
+		else
+		{
+			selfAnimator.SetBool("Firing", false);
 		}
     }
 
