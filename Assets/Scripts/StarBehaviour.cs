@@ -39,7 +39,9 @@ public class StarBehaviour : MonoBehaviour
 	{
 		if (col.CompareTag("Enemy"))
 		{
-			Destroy(col.gameObject);
+			col.gameObject.GetComponent<Animator>().SetBool("Die", true);
+			col.enabled = false;
+
 			Destroy(gameObject);
 		}
 	}

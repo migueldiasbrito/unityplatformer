@@ -64,4 +64,9 @@ public class FrogBehaviour : MonoBehaviour
 			selfAnimator.SetBool("IsGrounded", true);
 		}
 	}
+
+	void Die()
+	{
+		Destroy(gameObject);
+	}
 }

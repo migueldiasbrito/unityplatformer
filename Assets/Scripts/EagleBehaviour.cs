@@ -103,4 +103,9 @@ public class EagleBehaviour : MonoBehaviour
 			selfAnimator.SetBool("Attack", false);
 		}
 	}
+
+	void Die()
+	{
+		Destroy(gameObject);
+	}
 }
