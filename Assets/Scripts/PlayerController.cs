@@ -102,7 +102,7 @@ public class PlayerController : MonoBehaviour
 	{
 		if (col.CompareTag("House"))
 		{
-			SceneManager.LoadScene("SampleScene");
+			SceneManager.LoadScene("MenuScene");
 		}
 
 		if (col.CompareTag("Death"))
@@ -120,6 +120,6 @@ public class PlayerController : MonoBehaviour
 
 	void GameOver()
 	{
-		SceneManager.LoadScene("SampleScene");
+		SceneManager.LoadScene("MenuScene");
 	}
 }
