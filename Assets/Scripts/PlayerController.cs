@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
 	private bool isGrounded = false;
 	private bool canJump = false;
 	private float timeSinceLastFire = 0.0f;
+	private bool isDead = false;
 
     void Start()
     {
@@ -33,45 +34,53 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-		horizontalMovement = Input.GetAxis("Horizontal");
-
-		selfAnimator.SetBool("Running", Mathf.Abs(horizontalMovement) > 0.1f);
-
-		if((horizontalMovement > 0.1f && transform.localScale.x < 0) ||
-			(horizontalMovement < -0.1f && transform.localScale.x > 0))
+		if (!isDead)
 		{
-			transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
-		}
+			horizontalMovement = Input.GetAxis("Horizontal");
 
-		if(selfAnimator.GetBool("JumpingUp") && selfRigidbody.velocity.y < 0)
-		{
-			selfAnimator.SetBool("JumpingUp", false);
-			selfAnimator.SetBool("JumpingDown", true);
-		}
+			selfAnimator.SetBool("Running", Mathf.Abs(horizontalMovement) > 0.1f);
 
-		if (selfAnimator.GetBool("JumpingDown") && isGrounded)
-		{
-			selfAnimator.SetBool("JumpingDown", false);
-		}
+			if ((horizontalMovement > 0.1f && transform.localScale.x < 0) ||
+				(horizontalMovement < -0.1f && transform.localScale.x > 0))
+			{
+				transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+			}
 
-		if (Input.GetAxis("Jump") > 0.1f && isGrounded)
-		{
-			canJump = true;
-			selfAnimator.SetBool("JumpingUp", true);
-		}
+			if (selfAnimator.GetBool("JumpingUp") && selfRigidbody.velocity.y < 0)
+			{
+				selfAnimator.SetBool("JumpingUp", false);
+				selfAnimator.SetBool("JumpingDown", true);
+			}
 
-		timeSinceLastFire += Time.deltaTime;
-		if(Input.GetAxis("Fire1") > 0.1f && timeSinceLastFire >= RecoilTime)
-		{
-			GameObject newStar = Instantiate(StarPrefab);
-			newStar.transform.position = transform.position;
-			newStar.GetComponent<StarBehaviour>().Speed *= (transform.localScale.x > 0) ? 1 : -1;
-			timeSinceLastFire = 0.0f;
-			selfAnimator.SetBool("Firing", true);
+			if (selfAnimator.GetBool("JumpingDown") && isGrounded)
+			{
+				selfAnimator.SetBool("JumpingDown", false);
+			}
+
+			if (Input.GetAxis("Jump") > 0.1f && isGrounded)
+			{
+				canJump = true;
+				selfAnimator.SetBool("JumpingUp", true);
+			}
+
+			timeSinceLastFire += Time.deltaTime;
+			if (Input.GetAxis("Fire1") > 0.1f && timeSinceLastFire >= RecoilTime)
+			{
+				GameObject newStar = Instantiate(StarPrefab);
+				newStar.transform.position = transform.position;
+				newStar.GetComponent<StarBehaviour>().Speed *= (transform.localScale.x > 0) ? 1 : -1;
+				timeSinceLastFire = 0.0f;
+				selfAnimator.SetBool("Firing", true);
+			}
+			else
+			{
+				selfAnimator.SetBool("Firing", false);
+			}
 		}
 		else
 		{
-			selfAnimator.SetBool("Firing", false);
+			horizontalMovement = 0;
+			canJump = false;
 		}
     }
 
@@ -98,14 +107,19 @@ public class PlayerController : MonoBehaviour
 
 		if (col.CompareTag("Death"))
 		{
-			SceneManager.LoadScene("SampleScene");
+			selfAnimator.SetBool("Die", true);
 		}
 	}
 	void OnCollisionEnter2D(Collision2D col)
 	{
 		if (col.transform.CompareTag("Enemy"))
 		{
-			SceneManager.LoadScene("SampleScene");
+			selfAnimator.SetBool("Die", true);
 		}
+	}
+
+	void GameOver()
+	{
+		SceneManager.LoadScene("SampleScene");
 	}
 }
