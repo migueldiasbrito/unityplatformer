@@ -168,6 +168,7 @@ GameObject:
   - component: {fileID: 416505581}
   - component: {fileID: 416505580}
   - component: {fileID: 416505579}
+  - component: {fileID: 416505582}
   m_Layer: 0
   m_Name: Frog
   m_TagString: Enemy
@@ -307,6 +308,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.35, y: 0.32}
   m_EdgeRadius: 0
+--- !u!95 &416505582
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 416505576}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c30ada39169bf754a94f5e26b0cba092, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &454859258
 GameObject:
   m_ObjectHideFlags: 0
@@ -667,6 +687,7 @@ GameObject:
   - component: {fileID: 696540058}
   - component: {fileID: 696540057}
   - component: {fileID: 696540056}
+  - component: {fileID: 696540062}
   m_Layer: 0
   m_Name: Opossum (1)
   m_TagString: Enemy
@@ -823,6 +844,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &696540062
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 696540055}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 29aed30429c1f4046bb5be555bd9e288, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &749318443
 GameObject:
   m_ObjectHideFlags: 0
@@ -21339,6 +21379,7 @@ GameObject:
   - component: {fileID: 1014669963}
   - component: {fileID: 1014669967}
   - component: {fileID: 1014669968}
+  - component: {fileID: 1014669969}
   m_Layer: 0
   m_Name: Opossum
   m_TagString: Enemy
@@ -21495,6 +21536,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 5
+--- !u!95 &1014669969
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1014669962}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 29aed30429c1f4046bb5be555bd9e288, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1205491173
 GameObject:
   m_ObjectHideFlags: 0
@@ -21586,6 +21646,7 @@ GameObject:
   - component: {fileID: 1407329113}
   - component: {fileID: 1407329116}
   - component: {fileID: 1407329117}
+  - component: {fileID: 1407329118}
   m_Layer: 0
   m_Name: Eagle
   m_TagString: Enemy
@@ -21723,6 +21784,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.4, y: 0.41}
   m_EdgeRadius: 0
+--- !u!95 &1407329118
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407329112}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ead5f42fdb22bb948b86d5374b40e347, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1454072607
 GameObject:
   m_ObjectHideFlags: 0

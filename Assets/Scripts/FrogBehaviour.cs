@@ -15,6 +15,7 @@ public class FrogBehaviour : MonoBehaviour
 
 	private float timeSinceLastAction = 0.0f;
 	private Rigidbody2D selfRigidbody;
+	private Animator selfAnimator;
 	private bool canJump = false;
 	private int currentDirection = -1;
 	private int jumpCount = 0;
@@ -22,6 +23,7 @@ public class FrogBehaviour : MonoBehaviour
 	void Start()
     {
 		selfRigidbody = GetComponent<Rigidbody2D>();
+		selfAnimator = GetComponent<Animator>();
 	}
 
     void Update()
@@ -32,7 +34,9 @@ public class FrogBehaviour : MonoBehaviour
 		{
 			canJump = true;
 		}
-    }
+
+		selfAnimator.SetFloat("Velocity", selfRigidbody.velocity.y);
+	}
 
 	void FixedUpdate()
 	{
@@ -50,10 +54,14 @@ public class FrogBehaviour : MonoBehaviour
 			}
 
 			selfRigidbody.AddForce(new Vector2(currentDirection, 1) * JumpForce, ForceMode2D.Impulse);
+			
+			selfAnimator.SetBool("IsGrounded", false);
 		}
 		else if(Physics2D.OverlapArea(FeetRectangleTopLeft.position, FeetRectangleBottomRight.position, GroundLayer))
 		{
 			selfRigidbody.velocity = Vector2.zero;
+
+			selfAnimator.SetBool("IsGrounded", true);
 		}
 	}
 }

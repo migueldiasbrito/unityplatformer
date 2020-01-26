@@ -17,6 +17,7 @@ public class EagleBehaviour : MonoBehaviour
 	public float TakeOffSpeedY = 0.0f;
 
 	private Rigidbody2D selfRigidbody;
+	private Animator selfAnimator;
 	private float originalX;
 	private float originalY;
 	private float velocityY = 0.0f;
@@ -28,6 +29,7 @@ public class EagleBehaviour : MonoBehaviour
     void Start()
 	{
 		selfRigidbody = GetComponent<Rigidbody2D>();
+		selfAnimator = GetComponent<Animator>();
 		originalX = transform.position.x;
 		originalY = transform.position.y;
 		player = GameObject.FindGameObjectWithTag("Player");
@@ -43,6 +45,7 @@ public class EagleBehaviour : MonoBehaviour
 					(transform.localScale.x < 0 && player.transform.position.x >= transform.position.x)))
 				{
 					state = EagleState.ATTACK;
+					selfAnimator.SetBool("Attack", true);
 				}
 				else
 				{
@@ -59,6 +62,7 @@ public class EagleBehaviour : MonoBehaviour
 				{
 					transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
 				}
+
 				break;
 			case EagleState.TAKEOFF:
 				if (transform.position.y >= originalY)
@@ -96,6 +100,7 @@ public class EagleBehaviour : MonoBehaviour
 		if (state == EagleState.ATTACK)
 		{
 			state = EagleState.TAKEOFF;
+			selfAnimator.SetBool("Attack", false);
 		}
 	}
 }
