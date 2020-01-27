@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(AudioSource))]
 public class EagleBehaviour : MonoBehaviour
 {
 	private enum EagleState { IDLE, ATTACK, TAKEOFF}
@@ -16,8 +17,13 @@ public class EagleBehaviour : MonoBehaviour
 	public float AttackSpeedY = 0.0f;
 	public float TakeOffSpeedY = 0.0f;
 
+	public AudioClip DieClip;
+	public AudioClip AttackClip;
+
 	private Rigidbody2D selfRigidbody;
 	private Animator selfAnimator;
+	private AudioSource selfAudioSource;
+	private Renderer selfRenderer;
 	private float originalX;
 	private float originalY;
 	private float velocityY = 0.0f;
@@ -30,9 +36,11 @@ public class EagleBehaviour : MonoBehaviour
 	{
 		selfRigidbody = GetComponent<Rigidbody2D>();
 		selfAnimator = GetComponent<Animator>();
+		selfAudioSource = GetComponent<AudioSource>();
 		originalX = transform.position.x;
 		originalY = transform.position.y;
 		player = GameObject.FindGameObjectWithTag("Player");
+		selfRenderer = GetComponent<Renderer>();
 	}
 
     void Update()
@@ -46,6 +54,10 @@ public class EagleBehaviour : MonoBehaviour
 				{
 					state = EagleState.ATTACK;
 					selfAnimator.SetBool("Attack", true);
+					if (selfRenderer.isVisible)
+					{
+						selfAudioSource.PlayOneShot(AttackClip);
+					}
 				}
 				else
 				{
@@ -107,5 +119,18 @@ public class EagleBehaviour : MonoBehaviour
 	void Die()
 	{
 		Destroy(gameObject);
+	}
+
+	void OnTriggerEnter2D(Collider2D col)
+	{
+		if (col.GetComponent<StarBehaviour>())
+		{
+			selfAnimator.SetBool("Die", true);
+			GetComponent<Collider2D>().enabled = false;
+			if (selfRenderer.isVisible)
+			{
+				selfAudioSource.PlayOneShot(DieClip);
+			}
+		}
 	}
 }

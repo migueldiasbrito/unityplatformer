@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(AudioSource))]
 public class PlayerController : MonoBehaviour
 {
 	public float Speed = 0.0f;
@@ -17,18 +18,29 @@ public class PlayerController : MonoBehaviour
 	public GameObject StarPrefab;
 	public float RecoilTime = 0.0f;
 
+	public AudioClip FireClip;
+	public float FootstepInterval = 0.0f;
+	public AudioClip Footstep1;
+	public AudioClip Footstep2;
+	public AudioClip Jump;
+	public AudioClip Die;
+
 	private Rigidbody2D selfRigidbody;
 	private Animator selfAnimator;
+	private AudioSource selfAudioSource;
 	private float horizontalMovement = 0.0f;
 	private bool isGrounded = false;
 	private bool canJump = false;
 	private float timeSinceLastFire = 0.0f;
 	private bool isDead = false;
+	private float footstepTimeCounter = 0.0f;
+	private int footstepStepCounter = 0;
 
-    void Start()
+	void Start()
     {
 		selfRigidbody = GetComponent<Rigidbody2D>();
 		selfAnimator = GetComponent<Animator>();
+		selfAudioSource = GetComponent<AudioSource>();
 		timeSinceLastFire = RecoilTime;
     }
 
@@ -61,6 +73,32 @@ public class PlayerController : MonoBehaviour
 			{
 				canJump = true;
 				selfAnimator.SetBool("JumpingUp", true);
+				selfAudioSource.PlayOneShot(Jump);
+			}
+
+			if (Mathf.Abs(horizontalMovement) > 0.1f && !selfAnimator.GetBool("JumpingUp") && !selfAnimator.GetBool("JumpingDown"))
+			{
+				footstepTimeCounter += Time.deltaTime;
+				if (footstepTimeCounter >= FootstepInterval)
+				{
+					if (footstepStepCounter == 0)
+					{
+						selfAudioSource.PlayOneShot(Footstep1);
+						footstepStepCounter = 1;
+					}
+					else
+					{
+						selfAudioSource.PlayOneShot(Footstep2);
+						footstepStepCounter = 0;
+					}
+
+					footstepTimeCounter = 0;
+				}
+			}
+			else
+			{
+				footstepTimeCounter = FootstepInterval;
+				footstepStepCounter = 0;
 			}
 
 			timeSinceLastFire += Time.deltaTime;
@@ -71,6 +109,7 @@ public class PlayerController : MonoBehaviour
 				newStar.GetComponent<StarBehaviour>().Speed *= (transform.localScale.x > 0) ? 1 : -1;
 				timeSinceLastFire = 0.0f;
 				selfAnimator.SetBool("Firing", true);
+				selfAudioSource.PlayOneShot(FireClip);
 			}
 			else
 			{
@@ -108,6 +147,7 @@ public class PlayerController : MonoBehaviour
 		if (col.CompareTag("Death"))
 		{
 			selfAnimator.SetBool("Die", true);
+			selfAudioSource.PlayOneShot(Die);
 		}
 	}
 	void OnCollisionEnter2D(Collision2D col)
@@ -115,6 +155,8 @@ public class PlayerController : MonoBehaviour
 		if (col.transform.CompareTag("Enemy"))
 		{
 			selfAnimator.SetBool("Die", true);
+			selfAudioSource.PlayOneShot(Die);
+			isDead = true;
 		}
 	}
 

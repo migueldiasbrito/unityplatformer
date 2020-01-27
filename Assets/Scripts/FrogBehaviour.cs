@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(AudioSource))]
 public class FrogBehaviour : MonoBehaviour
 {
 	public float IdleTime = 0.0f;
@@ -13,9 +14,14 @@ public class FrogBehaviour : MonoBehaviour
 	public Transform FeetRectangleBottomRight;
 	public LayerMask GroundLayer;
 
+	public AudioClip DieClip;
+	public AudioClip JumpClip;
+
 	private float timeSinceLastAction = 0.0f;
 	private Rigidbody2D selfRigidbody;
 	private Animator selfAnimator;
+	private Renderer selfRenderer;
+	private AudioSource selfAudioSource;
 	private bool canJump = false;
 	private int currentDirection = -1;
 	private int jumpCount = 0;
@@ -24,6 +30,8 @@ public class FrogBehaviour : MonoBehaviour
     {
 		selfRigidbody = GetComponent<Rigidbody2D>();
 		selfAnimator = GetComponent<Animator>();
+		selfAudioSource = GetComponent<AudioSource>();
+		selfRenderer = GetComponent<Renderer>();
 	}
 
     void Update()
@@ -33,6 +41,10 @@ public class FrogBehaviour : MonoBehaviour
 		if (timeSinceLastAction >= IdleTime)
 		{
 			canJump = true;
+			if (selfRenderer.isVisible)
+			{
+				selfAudioSource.PlayOneShot(JumpClip);
+			}
 		}
 
 		selfAnimator.SetFloat("Velocity", selfRigidbody.velocity.y);
@@ -68,5 +80,18 @@ public class FrogBehaviour : MonoBehaviour
 	void Die()
 	{
 		Destroy(gameObject);
+	}
+
+	void OnTriggerEnter2D(Collider2D col)
+	{
+		if (col.GetComponent<StarBehaviour>())
+		{
+			if (selfRenderer.isVisible)
+			{
+				selfAnimator.SetBool("Die", true);
+			}
+			GetComponent<Collider2D>().enabled = false;
+			selfAudioSource.PlayOneShot(DieClip);
+		}
 	}
 }
