@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
 				selfAnimator.SetBool("JumpingDown", false);
 			}
 
-			if (Input.GetAxis("Jump") > 0.1f && isGrounded)
+			if (Input.GetAxis("Jump") > 0.1f && isGrounded && !selfAnimator.GetBool("JumpingUp"))
 			{
 				canJump = true;
 				selfAnimator.SetBool("JumpingUp", true);
